@@ -20,6 +20,11 @@ const DomoSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  publicity: {
+    type: String,
+    required: true,
+    trim: true,
+  },
   owner: {
     type: mongoose.Schema.ObjectId,
     required: true,

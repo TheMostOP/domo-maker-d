@@ -9,50 +9,17 @@ const handleDomo = (e, onDomoAdded) => {
 
     const name = e.target.querySelector('#domoName').value;
     const age = e.target.querySelector('#domoAge').value;
-    // const fireChecked = e.target.querySelector('#domoElementFire').checked;
     const element = e.target.querySelector('#domoElement').value;
-    // const element = () => {
-    //     if(e.target.querySelector('#domoElementFire').checked) {
-    //         return "Fire";
-    //     }
-    //     else {
-    //         return "Water";
-    //     }
-    // }
+    const publicity = e.target.querySelector('#domoPublicity').checked;
 
-    console.log(element);
-    // console.log(fireChecked);
-
-    //If the fire button is checked, the element is Fire.
-    // if (fireChecked == true) {
-    //     element = "Fire";
-    //     console.log(element);
-    // } 
-    // //Otherwise it's Water
-    // else {
-    //     element = "Water";
-    //     console.log(element);
-    // }
-
-    // switch (fireChecked) {
-    //     case true:
-    //         element = "Fire";
-    //         break;
-    //     case false:
-    //         element = "Water";
-    //         break;
-    //     default:
-    //         break;
-    // }
-
-    console.log(element);
+    console.log(publicity)
 
     if (!name || !age || !element || element == "null") {
         helper.handleError('All fields are required');
         return false;
     }
 
-    helper.sendPost(e.target.action, { name, age, element }, onDomoAdded);
+    helper.sendPost(e.target.action, { name, age, element, publicity }, onDomoAdded);
     return false;
 }
 
@@ -76,6 +43,8 @@ const DomoForm = (props) => {
                     <option value="Water">Water</option>
                 </select>
             </div>
+            <label htmlFor="publicity">Public? </label>
+            <input id="domoPublicity" type="checkbox" name="publicity" />
             <input className="makeDomoSubmit" type="submit" value="Make Domo" />
         </form>
     )
@@ -108,6 +77,7 @@ const DomoList = (props) => {
                 <h3 className="domoName">Name: {domo.name}</h3>
                 <h3 className="domoAge">Age: {domo.age}</h3>
                 <h3 className="domoElement">Element: {domo.element}</h3>
+                <h3 className="domoPublicity">Public? {domo.publicity}</h3>
             </div>
         );
     });
