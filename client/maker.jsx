@@ -12,8 +12,6 @@ const handleDomo = (e, onDomoAdded) => {
     const element = e.target.querySelector('#domoElement').value;
     const publicity = e.target.querySelector('#domoPublicity').checked;
 
-    console.log(publicity)
-
     if (!name || !age || !element || element == "null") {
         helper.handleError('All fields are required');
         return false;
@@ -89,6 +87,45 @@ const DomoList = (props) => {
     );
 };
 
+const PublicDomoList = (props) => {
+    const [domos, setDomos] = useState(props.domos);
+
+    useEffect(() => {
+        const loadDomosFromServer = async () => {
+            const response = await fetch('/getPublicDomos');
+            const data = await response.json();
+            setDomos(data.domos);
+        };
+        loadDomosFromServer();
+    }, [props.reloadDomos]);
+
+    if (domos.length === 0) {
+        return (
+            <div className="domoList">
+                <h3 className="emptyDomo">No Domos Yet!</h3>
+            </div>
+        );
+    }
+
+    const domoNodes = domos.map(domo => {
+        return (
+            <div key={domo.id} className="domo">
+                <img src="assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
+                <h3 className="domoName">Name: {domo.name}</h3>
+                <h3 className="domoAge">Age: {domo.age}</h3>
+                <h3 className="domoElement">Element: {domo.element}</h3>
+                <h3 className="domoPublicity">Public? {domo.publicity}</h3>
+            </div>
+        );
+    });
+
+    return (
+        <div className="domoList">
+            {domoNodes}
+        </div>
+    );
+};
+
 const App = () => {
     const [reloadDomos, setReloadDomos] = useState(false);
 
@@ -99,6 +136,10 @@ const App = () => {
             </div>
             <div id="domos">
                 <DomoList domos={[]} reloadDomos={reloadDomos} />
+            </div>
+            <div id="publicDomos">
+                <p>Public Domos!</p>
+                <PublicDomoList domos={[]} reloadDomos={reloadDomos} />
             </div>
         </div>
     );

@@ -3,6 +3,7 @@ const mid = require('./middleware');
 
 const router = (app) => {
   app.get('/getDomos', mid.requiresLogin, controllers.Domo.getDomos);
+  app.get('/getPublicDomos', mid.requiresLogin, controllers.Domo.getPublicDomos);
 
   app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
   app.post('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.login);

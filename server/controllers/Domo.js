@@ -21,7 +21,9 @@ const makeDomo = async (req, res) => {
     const newDomo = new Domo(domoData);
     await newDomo.save();
 
-    return res.status(201).json({ name: newDomo.name, age: newDomo.age, element: newDomo.element, publicity: newDomo.publicity });
+    return res.status(201).json({
+      name: newDomo.name, age: newDomo.age, element: newDomo.element, publicity: newDomo.publicity,
+    });
   } catch (err) {
     console.log(err);
     if (err.code === 11000) {
@@ -43,8 +45,21 @@ const getDomos = async (req, res) => {
   }
 };
 
+const getPublicDomos = async (req, res) => {
+  try {
+    const query = { publicity: 'true' };
+    const docs = await Domo.find(query).select('name age element publicity').lean().exec();
+
+    return res.json({ domos: docs });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: 'Error retrieving domos!' });
+  }
+};
+
 module.exports = {
   makerPage,
   makeDomo,
   getDomos,
+  getPublicDomos,
 };
