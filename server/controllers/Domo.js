@@ -3,7 +3,6 @@ const models = require('../models');
 const { Domo } = models;
 
 const makerPage = async (req, res) => res.render('app');
-const snowflakePage = async (req, res) => res.render('snowflake');
 
 const makeDomo = async (req, res) => {
   if (!req.body.name || !req.body.age || !req.body.element) {
@@ -58,23 +57,9 @@ const getPublicDomos = async (req, res) => {
   }
 };
 
-const playSnowflake = async (req, res) => {
-  try {
-    const query = { owner: req.session.account._id };
-    const docs = await Domo.find(query).select('name age element publicity').lean().exec();
-
-    return res.json({ domos: docs });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json({ error: 'Error retrieving domos!' });
-  }
-};
-
 module.exports = {
   makerPage,
-  snowflakePage,
   makeDomo,
   getDomos,
   getPublicDomos,
-  playSnowflake
 };
