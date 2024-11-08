@@ -3,7 +3,7 @@ const models = require('../models');
 const { Domo } = models;
 
 const makerPage = async (req, res) => res.render('app');
-const snowflakePage = async (req, res) => res.render('app');
+const snowflakePage = async (req, res) => res.render('snowflake');
 
 const makeDomo = async (req, res) => {
   if (!req.body.name || !req.body.age || !req.body.element) {
