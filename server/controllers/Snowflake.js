@@ -2,7 +2,7 @@ const models = require('../models');
 
 const { Domo } = models;
 
-const snowflakePage = async (req, res) => res.render('snowflake');
+const snowflakePage = async (req, res) => res.render('app');
 
 const playSnowflake = async (req, res) => {
   try {
