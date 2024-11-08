@@ -116,7 +116,7 @@ const SnowflakeForm = (props) => {
 //     );
 // };
 
-const App = () => {
+const SnowflakeApp = () => {
     const [reloadSnowflakes, setReloadSnowflakes] = useState(false);
 
     return (
@@ -131,7 +131,7 @@ const App = () => {
 
 const init = () => {
     const root = createRoot(document.getElementById('app'));
-    root.render(<App />);
+    root.render(<SnowflakeApp />);
 };
 
 window.onload = init;
