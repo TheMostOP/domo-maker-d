@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
     entry: {
         app: './client/maker.jsx',
-        snowflakeApp: './client/snowflake.jsx',
+        snowflake: './client/snowflake.jsx',
         login: './client/login.jsx',
     },
     module: {
