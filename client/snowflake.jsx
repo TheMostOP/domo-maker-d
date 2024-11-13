@@ -130,7 +130,7 @@ const App = () => {
 };
 
 const init = () => {
-    const root = createRoot(document.getElementById('app'));
+    const root = createRoot(document.getElementById('snowflake'));
     root.render(<App />);
 };
 
