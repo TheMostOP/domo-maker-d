@@ -7,8 +7,8 @@ const handleSnowflake = async (e, onSnowflakeAdded, updateMatchingSnowflakes) =>
     e.preventDefault();
     helper.hideError();
 
-    const word = e.target.querySelector('#word').value;
-    const user = e.target.querySelector('#user').value;
+    const word = e.target.querySelector('#snowflakeWord').value;
+    const user = e.target.querySelector('#domoUser').value;
 
     if (!word || !user) {
         helper.handleError('All fields are required');
