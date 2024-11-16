@@ -8,15 +8,14 @@ const handleSnowflake = async (e, onSnowflakeAdded, updateMatchingSnowflakes) =>
     helper.hideError();
 
     const word = e.target.querySelector('#snowflakeWord').value;
-    const user = e.target.querySelector('#snowflakeUser').value;
 
-    if (!word || !user) {
+    if (!word) {
         helper.handleError('All fields are required');
         return false;
     }
 
     try {
-        const response = await helper.sendPost(e.target.action, { word, user });
+        const response = await helper.sendPost(e.target.action, { word });
         if (response.matches) {
             updateMatchingSnowflakes(response.matches);
         }
