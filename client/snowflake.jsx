@@ -3,7 +3,7 @@ const React = require('react');
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
 
-const handleSnowflake = async (e, onSnowflakeAdded, updateMatchingSnowflakes) => {
+const handleSnowflake = (e, onSnowflakeAdded) => {
     e.preventDefault();
     helper.hideError();
 
@@ -15,23 +15,14 @@ const handleSnowflake = async (e, onSnowflakeAdded, updateMatchingSnowflakes) =>
         return false;
     }
 
-    try {
-        const response = await helper.sendPost(e.target.action, { word, user });
-        if (response.matches) {
-            updateMatchingSnowflakes(response.matches);
-        }
-        onSnowflakeAdded(); // Trigger reload of the main snowflake list
-    } catch (err) {
-        console.error('Error submitting snowflake:', err);
-    }
-
+    helper.sendPost(e.target.action, { word: word, user: user }, onSnowflakeAdded);
     return false;
 }
 
 const SnowflakeForm = (props) => {
     return (
         <form id="snowflakeForm"
-            onSubmit={(e) => handleSnowflake(e, props.triggerReload, props.updateMatchingSnowflakes)}
+            onSubmit={(e) => handleSnowflake(e, props.triggerReload)}
             name="snowflakeForm"
             action="/snowflake"
             method="POST"
@@ -40,11 +31,12 @@ const SnowflakeForm = (props) => {
             <label htmlFor="word">Word: </label>
             <input id="word" type="text" name="word" placeholder="Type something unique" />
             <label htmlFor="user">User: </label>
-            <input id="user" type="text" name="user" placeholder="Enter your username" />
+            <input id="user" type="text" name="user" placeholder="This will be handled more gracefully later" />
+            
             <input className="playSnowflakeSubmit" type="submit" value="Submit Snowflake" />
         </form>
-    );
-};
+    )
+}
 
 const SnowflakeList = (props) => {
     const [snowflake, setSnowflake] = useState(props.snowflake);
@@ -84,18 +76,29 @@ const SnowflakeList = (props) => {
 };
 
 const MatchingSnowflakeList = (props) => {
-    if (!props.snowflakes || props.snowflakes.length === 0) {
+    const [snowflakes, setSnowflakes] = useState(props.snowflakes);
+
+    useEffect(() => {
+        const loadSnowflakesFromServer = async () => {
+            const response = await fetch('/getMatchingSnowflakes');
+            const data = await response.json();
+            setSnowflakes(data.snowflakes);
+        };
+        loadSnowflakesFromServer();
+    }, [props.reloadSnowflakes]);
+
+    if (snowflakes.length === 0) {
         return (
             <div className="domoList">
-                <h3 className="emptyDomo">No Matching Snowflakes Found!</h3>
+                <h3 className="emptyDomo">No Domos Yet!</h3>
             </div>
         );
     }
 
-    const snowflakeNodes = props.snowflakes.map((snowflake, index) => {
+    const snowflakeNodes = snowflakes.map(snowflake => {
         return (
-            <div key={index} className="snowflake">
-                <img src="assets/img/domoface.jpeg" alt="snowflake face" className="snowflakeFace" />
+            <div key={snowflake.id} className="snowflake">
+                <img src="assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
                 <h3 className="snowflakeWord">Word: {snowflake.word}</h3>
                 <h3 className="snowflakeUser">Submitted by: {snowflake.owner}</h3>
             </div>
@@ -109,25 +112,15 @@ const MatchingSnowflakeList = (props) => {
     );
 };
 
-
 const App = () => {
     const [reloadSnowflakes, setReloadSnowflakes] = useState(false);
-    const [matchingSnowflakes, setMatchingSnowflakes] = useState([]);
 
     return (
         <div>
             <div id="playSnowflake">
-                <SnowflakeForm
-                    triggerReload={() => setReloadSnowflakes(!reloadSnowflakes)}
-                    updateMatchingSnowflakes={setMatchingSnowflakes}
-                />
+                <SnowflakeForm triggerReload={() => setReloadSnowflakes(!reloadSnowflakes)} />
             </div>
-            <div id="snowflakes">
-                <SnowflakeList snowflakes={[]} reloadSnowflakes={reloadSnowflakes} />
-            </div>
-            <div id="matchingSnowflakes">
-                <MatchingSnowflakeList snowflakes={matchingSnowflakes} />
-            </div>
+            
         </div>
     );
 };
