@@ -14,7 +14,7 @@ const handleSnowflake = async (e, onSnowflakeAdded, updateMatchingSnowflakes) =>
         helper.handleError('All fields are required');
         return false;
     }
-
+ 
     try {
         const response = await helper.sendPost(e.target.action, { word, user });
         if (response.matches) {
