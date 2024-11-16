@@ -38,83 +38,79 @@ const SnowflakeForm = (props) => {
     )
 }
 
-// const DomoList = (props) => {
-//     const [domos, setDomos] = useState(props.domos);
+const SnowflakeList = (props) => {
+    const [snowflake, setSnowflake] = useState(props.snowflake);
 
-//     useEffect(() => {
-//         const loadDomosFromServer = async () => {
-//             const response = await fetch('/getDomos');
-//             const data = await response.json();
-//             setDomos(data.domos);
-//         };
-//         loadDomosFromServer();
-//     }, [props.reloadDomos]);
+    useEffect(() => {
+        const loadSnowflakesFromServer = async () => {
+            const response = await fetch('/getSnowflakes');
+            const data = await response.json();
+            setSnowflake(data.snowflakes);
+        };
+        loadSnowflakesFromServer();
+    }, [props.reloadSnowflakes]);
 
-//     if (domos.length === 0) {
-//         return (
-//             <div className="domoList">
-//                 <h3 className="emptyDomo">No Domos Yet!</h3>
-//             </div>
-//         );
-//     }
+    if (snowflake.length === 0) {
+        return (
+            <div className="domoList">
+                <h3 className="emptyDomo">No Domos Yet!</h3>
+            </div>
+        );
+    }
 
-//     const domoNodes = domos.map(domo => {
-//         return (
-//             <div key={domo.id} className="domo">
-//                 <img src="assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
-//                 <h3 className="domoName">Name: {domo.name}</h3>
-//                 <h3 className="domoAge">Age: {domo.age}</h3>
-//                 <h3 className="domoElement">Element: {domo.element}</h3>
-//                 <h3 className="domoPublicity">Public? {domo.publicity}</h3>
-//             </div>
-//         );
-//     });
+    const snowflakeNodes = snowflake.map(snowflake => {
+        return (
+            <div key={snowflake.id} className="snowflake">
+                <img src="assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
+                <h3 className="snowflakeWord">Word: {snowflake.word}</h3>
+                <h3 className="snowflakeUser">Submitted by: {snowflake.owner}</h3>
+            </div>
+        );
+    });
 
-//     return (
-//         <div className="domoList">
-//             {domoNodes}
-//         </div>
-//     );
-// };
+    return (
+        <div className="snowflakeList">
+            {snowflakeNodes}
+        </div>
+    );
+};
 
-// const PublicDomoList = (props) => {
-//     const [domos, setDomos] = useState(props.domos);
+const MatchingSnowflakeList = (props) => {
+    const [snowflakes, setSnowflakes] = useState(props.snowflakes);
 
-//     useEffect(() => {
-//         const loadDomosFromServer = async () => {
-//             const response = await fetch('/getPublicDomos');
-//             const data = await response.json();
-//             setDomos(data.domos);
-//         };
-//         loadDomosFromServer();
-//     }, [props.reloadDomos]);
+    useEffect(() => {
+        const loadSnowflakesFromServer = async () => {
+            const response = await fetch('/getMatchingSnowflakes');
+            const data = await response.json();
+            setSnowflakes(data.snowflakes);
+        };
+        loadSnowflakesFromServer();
+    }, [props.reloadSnowflakes]);
 
-//     if (domos.length === 0) {
-//         return (
-//             <div className="domoList">
-//                 <h3 className="emptyDomo">No Domos Yet!</h3>
-//             </div>
-//         );
-//     }
+    if (snowflakes.length === 0) {
+        return (
+            <div className="domoList">
+                <h3 className="emptyDomo">No Domos Yet!</h3>
+            </div>
+        );
+    }
 
-//     const domoNodes = domos.map(domo => {
-//         return (
-//             <div key={domo.id} className="domo">
-//                 <img src="assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
-//                 <h3 className="domoName">Name: {domo.name}</h3>
-//                 <h3 className="domoAge">Age: {domo.age}</h3>
-//                 <h3 className="domoElement">Element: {domo.element}</h3>
-//                 <h3 className="domoPublicity">Public? {domo.publicity}</h3>
-//             </div>
-//         );
-//     });
+    const snowflakeNodes = snowflakes.map(snowflake => {
+        return (
+            <div key={snowflake.id} className="snowflake">
+                <img src="assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
+                <h3 className="snowflakeWord">Word: {snowflake.word}</h3>
+                <h3 className="snowflakeUser">Submitted by: {snowflake.owner}</h3>
+            </div>
+        );
+    });
 
-//     return (
-//         <div className="domoList">
-//             {domoNodes}
-//         </div>
-//     );
-// };
+    return (
+        <div className="snowflakeList">
+            {snowflakeNodes}
+        </div>
+    );
+};
 
 const App = () => {
     const [reloadSnowflakes, setReloadSnowflakes] = useState(false);
