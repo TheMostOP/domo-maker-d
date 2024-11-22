@@ -16,7 +16,7 @@ const router = (app) => {
   app.post('/maker', mid.requiresLogin, controllers.Domo.makeDomo);
 
   app.get('/snowflake', mid.requiresLogin, controllers.Snowflake.snowflakePage);
-  app.post('/snowflake', mid.requiresLogin, controllers.Snowflake.playSnowflake);
+  app.post('/snowflake', mid.requiresLogin, controllers.Snowflake.makeSnowflake);
 
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
 };

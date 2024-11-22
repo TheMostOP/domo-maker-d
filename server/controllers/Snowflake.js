@@ -59,6 +59,7 @@ const playSnowflake = async (req, res) => {
 
 module.exports = {
   snowflakePage,
+  getMatchingSnowflakes,
   makeSnowflake,
   playSnowflake,
   getMatchingSnowflakes, // Still exported if needed elsewhere

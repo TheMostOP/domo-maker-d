@@ -3,6 +3,8 @@ const React = require('react');
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
 
+console.log("hello");
+
 const handleSnowflake = async (e, onSnowflakeAdded, updateMatchingSnowflakes) => {
     e.preventDefault();
     helper.hideError();
