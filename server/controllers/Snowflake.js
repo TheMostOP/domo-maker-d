@@ -1,6 +1,6 @@
 const models = require('../models');
 
-const { Domo: Snowflake } = models;
+const { Snowflake } = models;
 
 const snowflakePage = async (req, res) => res.render('snowflake');
 
@@ -19,6 +19,7 @@ const makeSnowflake = async (req, res) => {
   if (!req.body.word) {
     return res.status(400).json({ error: 'All fields are required!' });
   }
+  
 
   const snowflakeData = {
     word: req.body.word,
@@ -45,15 +46,15 @@ const makeSnowflake = async (req, res) => {
   }
 };
 
-const playSnowflake = async (req, res) => {
+const getSnowflakes = async (req, res) => {
   try {
     const query = { owner: req.session.account._id };
-    const docs = await Snowflake.find(query).select('name age element publicity').lean().exec();
+    const docs = await Snowflake.find(query).select('word owner').lean().exec();
 
-    return res.json({ domos: docs });
+    return res.json({ snowflakes: docs });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ error: 'Error retrieving domos!' });
+    return res.status(500).json({ error: 'Error retrieving snowflakes!' });
   }
 };
 
@@ -61,6 +62,5 @@ module.exports = {
   snowflakePage,
   getMatchingSnowflakes,
   makeSnowflake,
-  playSnowflake,
-  getMatchingSnowflakes, // Still exported if needed elsewhere
+  getSnowflakes,
 };

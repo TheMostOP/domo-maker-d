@@ -17,7 +17,7 @@ module.exports = {
             },
         ],
     },
-    mode: 'development',
+    mode: 'production',
     watchOptions: {
         aggregateTimeout: 200,
     },
@@ -25,4 +25,5 @@ module.exports = {
         path: path.resolve(__dirname, 'hosted'),
         filename: '[name]Bundle.js',
     },
+    devtool: 'source-map',
 };
