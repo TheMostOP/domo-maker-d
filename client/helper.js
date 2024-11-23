@@ -33,6 +33,8 @@ const handleError = (message) => {
     if(handler) {
         handler(result);
     }
+
+    return result; // Ensure the result is returned
   };
 
   const hideError = () => {

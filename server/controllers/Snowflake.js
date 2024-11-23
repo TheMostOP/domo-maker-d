@@ -7,7 +7,7 @@ const snowflakePage = async (req, res) => res.render('snowflake');
 const getMatchingSnowflakes = async (word) => {
   try {
     const query = { word }; // Match by word
-    const docs = await Snowflake.find(query).select('word owner').lean().exec();
+    const docs = await Snowflake.find(query).select('word').lean().exec();
     return docs;
   } catch (err) {
     console.log(err);
